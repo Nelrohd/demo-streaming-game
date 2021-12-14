@@ -42,7 +42,7 @@ export const PlayGame = () => {
     const gS = await GameSessions.playSoloMoment({
       device: { info: deviceInfo },
       gameId: selectedGame.moment.appId,
-      momentId: selectedGame.moment.id,
+      momentId: '90e9a9ab-9cde-4cde-a97b-91df5e5420b7',
       sessionType: selectedGame.moment.momentType,
     });
 
