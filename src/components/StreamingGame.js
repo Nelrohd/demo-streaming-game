@@ -150,7 +150,7 @@ const StreamingGame = () => {
         <img
           id={index}
           className={classes.gameImg}
-          src={`https://assets.onmostealth.com/assets/games/152144/GameInfo/Image_750x522.png?v=${Date.now()}`}
+          src={`https://assets.onmostealth.com/assets/games/152144/GameInfo/Image_750x522.png?v=${Math.round(Date.now()*Math.random())}`}
         />
       ))}
       {showGameHeader && gameHeader()}
