@@ -8,3 +8,15 @@ export const playSoloMoment = gql`
     }
   }
 `;
+
+export const createTransactionV2 = gql`
+  mutation CreateTransactionV2(
+    $createTransactionV2Input: CreateTransactionV2Input!
+  ) {
+    createTransactionV2(createTransactionV2Input: $createTransactionV2Input) {
+      type
+      currency
+      balance
+    }
+  }
+`;

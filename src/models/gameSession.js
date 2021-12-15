@@ -1,5 +1,8 @@
 import apollo from "../clients/apollo";
-import { playSoloMoment } from "../queriesAndMutations/mutation";
+import {
+  playSoloMoment,
+  createTransactionV2,
+} from "../queriesAndMutations/mutation";
 import { listGames, listMomentsV2 } from "../queriesAndMutations/queries";
 
 const apolloClient = apollo.getInstance();
@@ -29,5 +32,15 @@ export class GameSessions {
     });
 
     return res.data.listMomentsV2;
+  };
+
+  static createTransactionV2 = async (key, data) => {
+    const res = await apolloClient.mutate({
+      mutation: createTransactionV2,
+      variables: {
+        createTransactionV2Input: { key },
+      },
+    });
+    return res.data.createTransactionV2[0];
   };
 }

@@ -72,6 +72,14 @@ export const useStyles = makeStyles(
       bottom: 20,
       right: 10,
     },
+    get1000Coin: {
+      width: "auto",
+      height: 40,
+      position: "absolute !important",
+      bottom: 20,
+      right: 120,
+      textTransform: "none",
+    },
     gamePanel: {
       marginTop: 10,
       width: "100%",
@@ -148,6 +156,9 @@ export const useStyles = makeStyles(
       height: "100vh",
       position: "absolute",
       opacity: "80%",
+    },
+    images: {
+      display: "flex",
     },
   },
   { index: 1 }

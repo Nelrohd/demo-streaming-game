@@ -4,11 +4,13 @@ import { StreamingController } from "streaming-view-sdk";
 import { useNavigate } from "react-router-dom";
 import AuthAmplify from "@aws-amplify/auth";
 import { useStyles } from "./styles.style";
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
-import FormGroup from "@mui/material/FormGroup";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
+import {
+  Button,
+  Typography,
+  FormGroup,
+  FormControlLabel,
+  Checkbox,
+} from "@mui/material";
 
 export const PlayGame = () => {
   const urlParams = new URLSearchParams(window.location.search);
@@ -21,6 +23,18 @@ export const PlayGame = () => {
   const [startImmediately, setStartImmediately] = useState(false);
   const [volume, setVolume] = useState(0);
   const [showGameHeader, setShowGameHeader] = useState(false);
+  const [enableGameImg, setEnableGameImg] = useState(false);
+  const [nbImage, setNbImage] = useState(null);
+
+  const FAKE_FEEDBACK = {
+    ease: 5,
+    email: "a@gmail.com",
+    fast: 5,
+    features: 5,
+    feedback: "test",
+    rating: 5,
+    recommend: "a",
+  };
 
   const navigate = useNavigate();
   const classes = useStyles();
@@ -36,6 +50,18 @@ export const PlayGame = () => {
     navigate("/");
   };
 
+  const sendFbToGet1000Coins = async () => {
+    try {
+      await GameSessions.createTransactionV2(
+        "FEEDBACK",
+        JSON.stringify(FAKE_FEEDBACK)
+      );
+      alert("congrats 1000 coins have been added to your account !");
+    } catch (error) {
+      alert(error);
+    }
+  };
+
   const getDeviceInfo = async () => {
     const streamingController = await StreamingController({
       apiEndpoint: STREAM_ENDPOINT,
@@ -49,12 +75,12 @@ export const PlayGame = () => {
     const gS = await GameSessions.playSoloMoment({
       device: { info: deviceInfo },
       gameId: selectedGame.moment.appId,
-      momentId: '90e9a9ab-9cde-4cde-a97b-91df5e5420b7',
+      momentId: "90e9a9ab-9cde-4cde-a97b-91df5e5420b7",
       sessionType: selectedGame.moment.momentType,
     });
 
     navigate(
-      `/streaming-view?userId=${userId}&gameSessionId=${gS.gameSessionId}&edgeNodeId=${gS.edgeNodeId}&gameName=${selectedGame.title}&startImmediately=${startImmediately}&volume=${volume}&showGameHeader=${showGameHeader}`
+      `/streaming-view?userId=${userId}&gameSessionId=${gS.gameSessionId}&edgeNodeId=${gS.edgeNodeId}&gameName=${selectedGame.title}&startImmediately=${startImmediately}&volume=${volume}&showGameHeader=${showGameHeader}&enableGameImg=${enableGameImg}&nbImage=${nbImage}`
     );
   };
 
@@ -86,6 +112,11 @@ export const PlayGame = () => {
   const onChangeShowGH = (e) => {
     const checked = e.target.checked;
     setShowGameHeader(checked);
+  };
+
+  const onChangeShowGameImg = (e) => {
+    const checked = e.target.checked;
+    setEnableGameImg(checked);
   };
 
   const onChangeVolume = (e) => {
@@ -139,6 +170,19 @@ export const PlayGame = () => {
               onChange={(e) => onChangeShowGH(e)}
             />
             <FormControlLabel control={<Checkbox />} label="Enable Timer" />
+            <div className={classes.images}>
+              <FormControlLabel
+                control={<Checkbox />}
+                label="Enable Game Images at Background"
+                onChange={(e) => onChangeShowGameImg(e)}
+              />
+              <input
+                type="number"
+                placeholder={"Enter number of images"}
+                value={nbImage}
+                onChange={(event) => setNbImage(event.target.value)}
+              />
+            </div>
           </FormGroup>
         )}
 
@@ -178,6 +222,14 @@ export const PlayGame = () => {
           onClick={logout}
         >
           Logout
+        </Button>
+
+        <Button
+          variant="outlined"
+          className={classes.get1000Coin}
+          onClick={sendFbToGet1000Coins}
+        >
+          Get 1000 coins
         </Button>
       </div>
     </div>

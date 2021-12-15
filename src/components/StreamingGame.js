@@ -19,6 +19,8 @@ const StreamingGame = () => {
   const gameName = urlParams.get("gameName");
   const startImmediately = urlParams.get("startImmediately") === "true";
   const showGameHeader = urlParams.get("showGameHeader") === "true";
+  const enableGameImg = urlParams.get("enableGameImg") === "true";
+  const nbImages = parseInt(urlParams.get("nbImage")) || 10;
 
   const [isStreamReady, setIsStreamReady] = useState(false);
   const [startPlayGame, setStartPlayGame] = useState(false);
@@ -146,13 +148,16 @@ const StreamingGame = () => {
 
   return (
     <div className={classes.gamePanel}>
-      {Array.from(new Array(10)).map((o, index) => (
-        <img
-          id={index}
-          className={classes.gameImg}
-          src={`https://assets.onmostealth.com/assets/games/152144/GameInfo/Image_750x522.png?v=${Math.round(Date.now()*Math.random())}`}
-        />
-      ))}
+      {enableGameImg &&
+        Array.from(new Array(nbImages)).map((o, index) => (
+          <img
+            id={index}
+            className={classes.gameImg}
+            src={`https://assets.onmostealth.com/assets/games/152144/GameInfo/Image_750x522.png?v=${Math.round(
+              Date.now() * Math.random()
+            )}`}
+          />
+        ))}
       {showGameHeader && gameHeader()}
       {!isStreamReady && !isEnd && (
         <div className={classes.loading}>
