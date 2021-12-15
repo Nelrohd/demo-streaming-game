@@ -15,7 +15,7 @@
     "react-hook-form": "^7.20.4",
     "react-router-dom": "^6.0.2",
     "react-scripts": "4.0.3",
-    "streaming-view-sdk": "git+https://appland-node@bitbucket.org/appland/streaming-view-sdk.git#20211021-1",
+    "streaming-view-sdk": "git+https://appland-node@bitbucket.org/appland/streaming-view-sdk.git#20211116-2",
     "web-vitals": "^1.1.2"
   },
   "scripts": {
